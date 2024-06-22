@@ -1,41 +1,21 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const routerApi = require('./routers');
 
+const port = 3000;
+const { faker } = require("@faker-js/faker");
 app.get("/", (req, res) => {
     res.send("Hola mi server en Express");
 });
-app.get("/productos", (req, res) => {
-    // res.send("Hola mi server en Express");
-    res.json({
-        name: "Productos 1",
-        price: 10.99,
-    })
-});
 
-app.get("/users", (req, res) => {
-    const { limit, offset } = req.query;
-    if (limit && offset) {
-        res.json({
-            limit,
-            offset
+app.use(express.json());
+
+routerApi(app)
 
 
-        })
-    } else {
-        res.send("Debe especificar limit y offset");
-    }
-
-});
 
 
-app.get("/categories/:categoryId/products/:productId", (req, res) => {
-    const { categoryId, productId } = req.params;
-    res.json({
-        categoryId,
-        productId,
-    })
-});
+
 
 app.listen(port, () => {
     console.log("My port: " + port);
